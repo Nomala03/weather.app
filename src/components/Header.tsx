@@ -18,8 +18,8 @@ export default function Header({ units, onUnits, onLocate, onSearch, onView, vie
       <h1 className="text-2xl font-bold">☀️ Weather{geo ? `- ${geo.name}${geo.country ? `, ${geo.country}` : ''}` : ''}</h1>
       <div className="flex-1" />
       <nav className="flex items-center gap-2">
-        <button className="btn" onClick={onLocate} title="Use my location">📍</button>
-        <button className="btn" onClick={onSearch} title="Search city">🔎</button>
+        <button className=".btn" onClick={onLocate} title="Use my location">Location📍</button>
+        <button className=".btn" onClick={onSearch} title="Search city">🔎</button>
         <div className="hidden sm:block"><UnitsToggle units={units} onToggle={onUnits} /></div>
         <div className="hidden sm:block"><ThemeToggle /></div>
         <AlertBell data={data} />

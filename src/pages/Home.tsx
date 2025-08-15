@@ -29,11 +29,12 @@ export default function Home() {
     api.selectGeo(g)
     setShowSearch(false)
   }
+  const { units }: { units: Units } = api
 
   return (
     <div className="min-h-dvh">
       <Header
-        units={api.units}
+        units={units}
         onUnits={api.setUnits}
         onLocate={() => {
           navigator.geolocation.getCurrentPosition(pos => {

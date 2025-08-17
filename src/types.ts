@@ -1,4 +1,4 @@
-export type Units = "metric" | "imperial";
+export type Units = 'metric' | 'imperial'
 
 export type Geo = { name: string; country?: string; latitude: number; longitude: number }
 
@@ -24,7 +24,13 @@ export type Daily = {
 }
 
 export type Alerts = {
-  warnings?: Array<{ id: string; event: string; headline?: string; description?: string; severity?: string }>
+  warnings?: Array<{
+    id: string
+    event: string
+    headline?: string
+    description?: string
+    severity?: string
+  }>
 }
 
 export type Forecast = {

@@ -19,8 +19,13 @@ export default defineConfig({
         icons: [
           { src: '/icons/pwa-192x192.png', sizes: '192x192', type: 'image/png' },
           { src: '/icons/pwa-512x512.png', sizes: '512x512', type: 'image/png' },
-          { src: '/icons/maskable-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' }
-        ]
+          {
+            src: '/icons/maskable-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable',
+          },
+        ],
       },
       workbox: {
         runtimeCaching: [
@@ -31,7 +36,7 @@ export default defineConfig({
             options: {
               cacheName: 'openmeteo-cache',
               expiration: { maxEntries: 60, maxAgeSeconds: 60 * 60 }, // 1h
-            }
+            },
           },
           {
             // Open‑Meteo geocoding
@@ -40,10 +45,10 @@ export default defineConfig({
             options: {
               cacheName: 'geocode-cache',
               expiration: { maxEntries: 60, maxAgeSeconds: 24 * 60 * 60 },
-            }
-          }
-        ]
-      }
-    })
+            },
+          },
+        ],
+      },
+    }),
   ],
 })

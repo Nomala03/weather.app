@@ -15,7 +15,11 @@ export default function SearchBar({ onPick }: { onPick: (g: Geo) => void }) {
       t = setTimeout(async () => {
         if (!val) return setList([])
         setLoading(true)
-        try { setList(await geocode(val)) } finally { setLoading(false) }
+        try {
+          setList(await geocode(val))
+        } finally {
+          setLoading(false)
+        }
       }, 300)
     }
   }, [])
@@ -24,14 +28,27 @@ export default function SearchBar({ onPick }: { onPick: (g: Geo) => void }) {
 
   return (
     <div className="w-full">
-      <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Search city..." className="input" />
-      {loading && <div className="text-sm mt-1 opacity-70">Searching...</div>}
+      <input
+        value={q}
+        onChange={(e) => setQ(e.target.value)}
+        placeholder="Search city..."
+        className="input"
+      />
+      {loading && <div className="mt-1 text-sm opacity-70">Searching...</div>}
       {!!list.length && (
-        <ul className="mt-2 max-h-60 overflow-auto rounded-xl border border-slate-200 dark:border-slate-700">
-          {list.map((g)=> (
+        <ul className="mt-2 max-h-60 overflow-auto rounded-xl border border-slate-200 dark:border-slate-400">
+          {list.map((g) => (
             <li key={`${g.latitude},${g.longitude}`}>
-              <button className="w-full text-left px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800" onClick={() => { onPick(g); setQ(''); setList([]) }}>
-                {g.name}{g.country ? `, ${g.country}`:''}
+              <button
+                className="w-full px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800"
+                onClick={() => {
+                  onPick(g)
+                  setQ('')
+                  setList([])
+                }}
+              >
+                {g.name}
+                {g.country ? `, ${g.country}` : ''}
               </button>
             </li>
           ))}

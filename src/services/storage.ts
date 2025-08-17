@@ -6,7 +6,12 @@ const LS_KEYS = {
   CACHE: 'weather.cache',
 } as const
 
-type Prefs = { units: Units; theme: 'light' | 'dark' | 'system'; selected?: string; view: 'hourly' | 'daily' }
+type Prefs = {
+  units: Units
+  theme: 'light' | 'dark' | 'system'
+  selected?: string
+  view: 'hourly' | 'daily'
+}
 
 type Cache = Record<string, Forecast> // key: `${lat},${lon},${units}`
 
@@ -19,16 +24,20 @@ export const storage = {
   },
   upsertLocation(loc: Geo) {
     const list = storage.getLocations()
-    const exists = list.find(l => l.latitude === loc.latitude && l.longitude === loc.longitude)
-    const next = exists ? list.map(l => (l.latitude===loc.latitude && l.longitude===loc.longitude ? loc : l)) : [loc, ...list]
+    const exists = list.find((l) => l.latitude === loc.latitude && l.longitude === loc.longitude)
+    const next = exists
+      ? list.map((l) => (l.latitude === loc.latitude && l.longitude === loc.longitude ? loc : l))
+      : [loc, ...list]
     storage.saveLocations(next.slice(0, 10))
   },
   removeLocation(lat: number, lon: number) {
-    const list = storage.getLocations().filter(l => !(l.latitude===lat && l.longitude===lon))
+    const list = storage.getLocations().filter((l) => !(l.latitude === lat && l.longitude === lon))
     storage.saveLocations(list)
   },
   getPrefs(): Prefs {
-    return JSON.parse(localStorage.getItem(LS_KEYS.PREFS) || '{"units":"metric","theme":"system","view":"hourly"}')
+    return JSON.parse(
+      localStorage.getItem(LS_KEYS.PREFS) || '{"units":"metric","theme":"system","view":"hourly"}'
+    )
   },
   savePrefs(p: Partial<Prefs>) {
     const curr = storage.getPrefs()

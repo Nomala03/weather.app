@@ -14,11 +14,14 @@ export default function Home() {
   const [showSearch, setShowSearch] = useState(false)
   const api = useWeather(saved)
 
-  // geolocate on first load if nothing saved
   useEffect(() => {
     if (!api.geo && 'geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        const g: Geo = { name: 'My location', latitude: pos.coords.latitude, longitude: pos.coords.longitude }
+      navigator.geolocation.getCurrentPosition((pos) => {
+        const g: Geo = {
+          name: 'My location',
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude,
+        }
         api.selectGeo(g)
       })
     }
@@ -32,16 +35,20 @@ export default function Home() {
   const { units }: { units: Units } = api
 
   return (
-    <div className="min-h-dvh">
+    <div className="h-full min-h-dvh w-full font-sans drop-shadow-lg md:max-w-[500px] md:px-10 md:py-4 lg:h-auto lg:px-24">
       <Header
         units={units}
         onUnits={api.setUnits}
         onLocate={() => {
-          navigator.geolocation.getCurrentPosition(pos => {
-            api.selectGeo({ name: 'My location', latitude: pos.coords.latitude, longitude: pos.coords.longitude })
+          navigator.geolocation.getCurrentPosition((pos) => {
+            api.selectGeo({
+              name: 'My location',
+              latitude: pos.coords.latitude,
+              longitude: pos.coords.longitude,
+            })
           })
         }}
-        onSearch={() => setShowSearch(v=>!v)}
+        onSearch={() => setShowSearch((v) => !v)}
         onView={api.setView}
         view={api.view}
         data={api.data}
@@ -70,7 +77,9 @@ export default function Home() {
         )}
 
         {!api.data && !api.loading && (
-          <div className="card p-6 text-center opacity-80">Search for a city or use your current location.</div>
+          <div className="card p-6 text-center opacity-80">
+            Search for a city or use your current location.
+          </div>
         )}
       </main>
     </div>

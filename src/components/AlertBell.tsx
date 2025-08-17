@@ -8,13 +8,13 @@ export default function AlertBell({ data }: { data: Forecast | null }) {
     if (Notification && Notification.permission === 'default') {
       Notification.requestPermission()
     }
-    // show a notification (best-effort)
+    // show a notification
     if (Notification && Notification.permission === 'granted') {
       const first = data.alerts.warnings[0]
-      navigator.serviceWorker?.getRegistration()?.then(reg => {
+      navigator.serviceWorker?.getRegistration()?.then((reg) => {
         reg?.showNotification(`Weather alert: ${first.event}`, {
           body: first.headline || first.description || 'Check details in app',
-          icon: '/icons/pwa-192x192.png'
+          icon: '/icons/pwa-192x192.png',
         })
       })
     }
@@ -22,7 +22,10 @@ export default function AlertBell({ data }: { data: Forecast | null }) {
 
   const count = data?.alerts?.warnings?.length || 0
   return (
-    <div title={count ? `${count} alert(s)` : 'No alerts'} className={`px-3 py-2 rounded-xl ${count? 'bg-red-500 text-white':'bg-slate-200 dark:bg-slate-700'}`}>
+    <div
+      title={count ? `${count} alert(s)` : 'No alerts'}
+      className={`rounded-xl px-3 py-2 ${count ? 'bg-red-500 text-white' : 'bg-slate-200 dark:bg-slate-700'}`}
+    >
       ⚠️ {count}
     </div>
   )

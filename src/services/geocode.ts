@@ -16,4 +16,4 @@ export async function geocode(q: string): Promise<Geo[]> {
     longitude: r.longitude,
   }))
   return list
-}                
+}

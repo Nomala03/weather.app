@@ -3,7 +3,7 @@ import type { Forecast, Geo, Units } from '../types'
 import { storage } from '../services/storage'
 import { cacheKey, fetchForecast } from '../services/openMetro'
 
-const TTL_MS = 15 * 60 * 1000 // 15 minutes cache
+const TTL_MS = 15 * 60 * 1000
 
 export function useWeather(initial?: Geo) {
   const [units, setUnits] = useState(storage.getPrefs().units)
@@ -22,7 +22,7 @@ export function useWeather(initial?: Geo) {
     const key = cacheKey(g, u)
     const cache = storage.getCache()
     const cached = cache[key]
-    const fresh = cached && (Date.now() - cached.fetchedAt < TTL_MS)
+    const fresh = cached && Date.now() - cached.fetchedAt < TTL_MS
     try {
       if (fresh) {
         setData(cached)
@@ -49,17 +49,20 @@ export function useWeather(initial?: Geo) {
     if (geo) load(geo, units)
   }, [geo, units, load])
 
-  const api = useMemo(() => ({
-    units,
-    setUnits: setUnitsSafe,
-    view,
-    setView,
-    geo,
-    selectGeo,
-    data,
-    loading,
-    error
-  }), [units, view, geo, data, loading, error, selectGeo])
+  const api = useMemo(
+    () => ({
+      units,
+      setUnits: setUnitsSafe,
+      view,
+      setView,
+      geo,
+      selectGeo,
+      data,
+      loading,
+      error,
+    }),
+    [units, view, geo, data, loading, error, selectGeo]
+  )
 
   return api
 }

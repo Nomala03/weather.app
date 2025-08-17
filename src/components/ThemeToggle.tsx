@@ -18,13 +18,16 @@ export default function ThemeToggle() {
   }, [theme])
 
   return (
-    <div className="inline-flex rounded-2xl bg-slate-200 dark:bg-slate-700 p-1">
-      {(['light','dark','system'] as const).map(t => (
-        <button key={t} className={`toggle ${theme===t ? 'bg-white dark:bg-slate-900 shadow' : ''}`} onClick={() => setTheme(t)}>
+    <div className="p- inline-flex rounded-2xl">
+      {(['light', 'dark', 'system'] as const).map((t) => (
+        <button
+          key={t}
+          className={`toggle ${theme === t ? 'bg-white shadow dark:bg-slate-900' : ''}`}
+          onClick={() => setTheme(t)}
+        >
           {t}
         </button>
       ))}
     </div>
   )
 }
-

@@ -17,14 +17,17 @@ export async function fetchForecast(geo: Geo, units: Units): Promise<Forecast> {
   url.searchParams.set('timezone', 'auto')
   url.searchParams.set('current', 'temperature_2m,relative_humidity_2m,wind_speed_10m')
   url.searchParams.set('hourly', 'temperature_2m,relative_humidity_2m,wind_speed_10m')
-  url.searchParams.set('daily', 'temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max')
+  url.searchParams.set(
+    'daily',
+    'temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max'
+  )
   url.searchParams.set('temperature_unit', u.temp)
   url.searchParams.set('wind_speed_unit', u.speed)
   url.searchParams.set('forecast_days', '7')
 
   const [fRes, aRes] = await Promise.all([
     fetch(url.toString()),
-    fetch(`${WARN}?latitude=${geo.latitude}&longitude=${geo.longitude}&timezone=auto`)
+    fetch(`${WARN}?latitude=${geo.latitude}&longitude=${geo.longitude}&timezone=auto`),
   ])
 
   if (!fRes.ok) throw new Error('Forecast request failed')
